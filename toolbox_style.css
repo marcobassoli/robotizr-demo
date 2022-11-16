@@ -1,0 +1,114 @@
+/** Palette: https://colorhunt.co/palette/f7fbfcd6e6f2b9d7ea769fcd 
+ * 
+ * #F7FBFC
+ * #D6E6F2
+ * #B9D7EA
+ * #769FCD
+ * #1C6DD0
+ *
+ * #005cc5
+ * 
+*/
+
+
+/* Makes our label white. */
+
+.blocklyTreeLabel {
+    color: white;
+    font-weight: bold;
+}
+
+
+/* Adds padding around the group of categories and separators. */
+
+.blocklyToolboxContents {
+    padding: 0.5em;
+}
+
+
+/* Adds space between the categories, rounds the corners and adds space around the label. */
+
+.blocklyTreeRow {
+    padding: 1rem;
+    margin-bottom: .5em;
+    /* border-radius: 2px; */
+    /* border-left: 8px solid rgb(220, 20, 60); */
+}
+
+
+/* Stacks the icon on top of the label. */
+
+.blocklyTreeRowContentContainer {
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+}
+
+.blocklyMainBackground {
+    stroke-width: 0%;
+}
+
+.blocklyTreeRow {
+    height: initial;
+}
+
+.blocklyText {
+    fill: black !important;
+    font-weight: 500 !important;
+}
+
+.zelos-renderer.beast-theme .blocklyDropdownText {
+    fill: black !important;
+}
+
+.zelos-renderer.beast-theme.blocklyDropDownDiv .goog-menuitem-content {
+    color: black;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0%;
+}
+
+body {
+    background-color: #fff;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+.logo-img {
+    width: 2rem;
+}
+
+.app-title {
+    font-size: 120%;
+}
+
+.app-version {
+    font-size: 80%;
+}
+
+table {
+    height: 100%;
+    width: 100%;
+    margin: 0%;
+}
+
+td {
+    padding: 0%;
+}
+
+#blocklyArea {
+    height: 100%;
+}
+
+.navbar {
+    background: linear-gradient(45deg, #005cc5, #2a8dff);
+    /* background-color: #005cc5; */
+}
+
+.bottom-bar {
+    background: linear-gradient(45deg, #005cc5, #2a8dff);
+    /* background-color: #005cc5; */
+}
