@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Robotizr Cloud</title>
+    <link rel="icon" type="image/png" href="/img/favicon.svg">
+    <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+    <script src="https://unpkg.com/@blockly/dev-tools@2.0.0/dist/index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="app-demo.js"></script>
+    <script src="service-worker.js"></script>
+    <script src="cookie-banner.js"></script>
+    <link rel="stylesheet" href="toolbox_style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!-- REGISTER SERVICE WORKER -->
+    <script>
+        navigator.serviceWorker.register("service-worker.js")
+            .then((reg) => { /* OK */ })
+            .catch((err) => {
+                console.error(err);
+            });
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V72RWR296P"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-V72RWR296P');
+    </script>
+    <!-- Hotjar Tracking Code for https://www.robotizr.com -->
+    <script>
+        (function(h, o, t, j, a, r) {
+            h.hj = h.hj || function() {
+                (h.hj.q = h.hj.q || []).push(arguments)
+            };
+            h._hjSettings = {
+                hjid: 2974045,
+                hjsv: 6
+            };
+            a = o.getElementsByTagName('head')[0];
+            r = o.createElement('script');
+            r.async = 1;
+            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
+
+</head>
+
+<body onload="start()">
+    <!-- <body> -->
+
+    <!-- Toasts guide -->
+    <div class="container position-fixed p-3" id="toast1-container" style="z-index: 9999; top: 5.5rem; left: 41rem;">
+        <button class="btn" type="button" id="spinnerBtn1" data-bs-dismiss="toast" data-bs-target="#toast1">
+            <span class="spinner-grow text-secondary" role="status" style="z-index: 9998; top: 3rem; left: 10rem; animation-duration: 1.5s; display:block;"></spans>
+        </button>
+        <div id="toast1" class="toast mt-5" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Inizia da qui</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Questa è la tua "Sequenza azioni", nella quale potrai inserire in sequenza i blocchi "Azionamenti".
+            </div>
+        </div>
+    </div>
+
+    <div id="toastGroup2" class="container position-fixed p-3" style="z-index: 9999; top: 4.5rem; left: 3rem;">
+        <button class="btn" type="button" id="spinnerBtn2" data-bs-dismiss="toast" data-bs-target="#toast2" hidden>
+            <span class="spinner-grow text-secondary" role="status" style="z-index: 9998; top: 3rem; left: 10rem; animation-duration: 1.5s; display:block;"></spans>
+        </button>
+        <div id="toast2" class="toast mx-5" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Azionamenti</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Apri il menu "Azionamenti" per selezionare i movimenti da inserire nella tua "Sequenza azioni".
+            </div>
+        </div>
+    </div>
+
+    <div id="toastGroup3" class="container position-fixed p-3" style="z-index: 9999; top: 10.5rem; left: 12rem;">
+        <button class="btn" type="button" id="spinnerBtn3" data-bs-dismiss="toast" data-bs-target="#toast3" hidden>
+            <span class="spinner-grow text-secondary" role="status" style="z-index: 9998; top: 3rem; left: 10rem; animation-duration: 1.5s; display:block;"></spans>
+        </button>
+        <div id="toast3" class="toast mx-5" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Aggiungi azione</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Ora prendi l'azione "Vai in posizione ...", trascinala all'interno della "Sequenza azioni" ed il gioco è fatto!
+            </div>
+        </div>
+    </div>
+
+
+
+    <table>
+        <tr>
+            <td>
+                <nav class="navbar navbar-dark">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">
+                            <img src="img/logo.svg" alt="Robotizr logo image" class="d-inline-block align-text-center logo-img">
+                            <span class="app-title ps-3 pe-1">Robotizr Cloud</span>
+                        </a>
+                        <button class="btn btn-light d-flex" data-bs-toggle="modal" data-bs-target="#demoWarningModal">Connetti</button>
+                    </div>
+                </nav>
+            </td>
+        </tr>
+        <tr>
+            <td id="blocklyArea">
+                <!-- Blockly area -->
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="row bottom-bar p-2">
+                    <div class="col-2 d-grid">
+                        <input type="file" id="loadBtn" style="display: none;" accept=".rbz" />
+                        <button type="button" class="btn btn-light" onclick="document.getElementById('loadBtn').click();">Carica</button>
+                    </div>
+                    <div class="col-2 d-grid">
+                        <button type="button" class="btn btn-light" id="saveBtn">Salva</button>
+                    </div>
+                    <div class="col-5 d-grid"></div>
+                    <div class="col-3 d-grid">
+                        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#demoWarningModal">Avvia</button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Cookie Banner -->
+    <div id="cb-cookie-banner" class="alert alert-dark text-center mb-0" role="alert">
+        🍪 Questo sito usa cookies per assicurarti la migliore esperienza d'uso.
+        <a href="/gdpr.html" target="blank">Scopri di più</a>
+        <button type="button" class="btn btn-primary btn-sm ms-3" onclick="window.cb_hideCookieBanner()">Ok</button>
+    </div>
+    <!-- End of Cookie Banner -->
+
+    <!-- Startup Modal -->
+    <div class="modal fade" id="demoStartupWarningModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="demoStartupWarningModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="demoStartupWarningModalLabel">Benvenuto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="OK"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Questa è la <strong>versione dimostrativa dell'App Robotizr</strong>. Testa tu stesso la semplicità con cui è possibile progettare un'automazione industriale. </p>
+                    <br>
+                    <p>Cosa puoi fare qui:</p>
+                    <ul>
+                        <li>Definire un'automazione partendo dal blocco "Sequenza azioni" che trovi in "Azionamenti";</li>
+                        <li>Salvare e richiamare un programma salvato, in modo da non perdere mai il tuo lavoro.</li>
+                    </ul>
+                    <br>
+                    <p>Limitazioni della versione di prova:</p>
+                    <ul>
+                        <li>Non puoi connetterti a un macchinario via USB attraverso il tasto "Connetti";</li>
+                        <li>Di conseguenza, non puoi avviare il programma che andrebbe scritto sul macchinario.</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="startModal" class="btn btn-primary" data-bs-dismiss="modal">Inizia</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buttons Modal -->
+    <div class="modal fade" id="demoWarningModal" tabindex="-1" aria-labelledby="demoWarningModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="demoWarningModalLabel">Versione Demo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="OK"></button>
+                </div>
+                <div class="modal-body">
+                    Questa funzionalità non è supportata nella versione demo del prodotto.
+                    <a href="/index.html#contact">Contattaci per saperne di più.</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="blocklyDiv" style="position: absolute"></div>
+
+    <script type="text/javascript">
+        $(window).on('load', function() {
+            initializeCookieBanner();
+            $('#demoStartupWarningModal').modal('show');
+        });
+    </script>
+
+    <!-- Toolbox Definition -->
+    <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox-categories" style="display: none">
+        <category name="Azionamenti" colour="#1C6DD0">
+            <!-- <block type="motor_object"></block> -->
+            <!-- <block type="piston_object"></block> -->
+            <!-- <block type="drive_forward_backward"></block> -->
+            <!-- <block type="drive_stop"></block> -->
+            <block type="motor_sequence"></block>
+            <!-- <block type="drive_forward_backward_sequence"></block> -->
+            <block type="drive_forward_backward_sequence_xyz"></block>
+            <block type="tool_sequence"></block>
+            <!-- <block type="tool_on_sequence"></block>
+            <block type="tool_off_sequence"></block> -->
+            <block type="digital_output_sequence"></block>
+            <!-- <block type="claw"></block> -->
+            <block type="drive_pause_sequence"></block>
+            <block type="drive_stop_sequence"></block>
+        </category>
+        <category name="Segnalazioni" colour="#ffc107">
+            <!-- <block type="lamp_object"></block> -->
+            <!-- <block type="lamp_blink_sequence"></block> -->
+            <block type="lamp_sequence"></block>
+            <!-- <block type="lamp_on_sequence"></block>
+            <block type="lamp_off_sequence"></block> -->
+            <!-- <block type="sound_object"></block> -->
+            <!-- <block type="sound_blink_sequence"></block> -->
+            <block type="sound_sequence"></block>
+            <!-- <block type="sound_on_sequence"></block>
+            <block type="sound_off_sequence"></block> -->
+        </category>
+        <!-- <category name="Sicurezza" colour="#ff0039">
+            <block type="safety_object"></block>
+        </category> -->
+        <category name="Condizioni" colour="#4c4c4c">
+            <block type="conj_block"></block>
+            <block type="time_condition"></block>
+            <!-- <block type="distance_condition"></block> -->
+            <block type="sensor_onoff_condition"></block>
+            <block type="pushbutton_condition"></block>
+            <block type="forever_condition"></block>
+            <block type="conj_and"></block>
+            <block type="conj_or"></block>
+        </category>
+        <category name="Controlli" colour="#4c4c4c">
+            <block type="control_if"></block>
+            <block type="control_loop"></block>
+            <block type="control_loop_n_times"></block>
+        </category>
+        <category name="Gruppi" custom="COLOUR_PALETTE" colour="#ff5722">
+            <block type="actions_group"></block>
+        </category>
+    </xml>
+
+    <script src="cookie-banner.js"></script>
+
+</body>
+
+</html>
