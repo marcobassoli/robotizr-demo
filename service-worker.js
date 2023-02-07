@@ -1,9 +1,6 @@
 // FILES TO CACHE
 const cName = "Robotizr Cloud",
-    cFiles = ["index.js", "index.html", "toolbox_style.css", "robzr-category.js",
-        "conditions_blocks.js", "emergency_blocks.js",
-        "motion_blocks.js", "signalling_blocks.js", "img/logo.png", "img/favicon.png"
-    ];
+    cFiles = ["app-demo.js", "index.html", "toolbox_style.css", "img/logo.png", "img/favicon.png"];
 
 // CREATE/INSTALL CACHE
 self.addEventListener("install", (evt) => {
