@@ -11,6 +11,18 @@
 */
 
 
+/* Typeform overwrite */
+
+.tf-v1-close {
+    display: none;
+}
+
+.tf-v1-slider {
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, .3) !important;
+}
+
+
 /* Makes our label white. */
 
 .blocklyTreeLabel {
