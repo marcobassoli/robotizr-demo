@@ -26,20 +26,12 @@
 
 /* Tally overwrite */
 
-.JRPqs {
-    display: none !important;
-}
-
-.tally-close-button {
-    display: none !important;
-}
-
-.sc-650bfc69-0 {
-    display: none !important;
-}
-
 .index-module_overlay__8wtEj {
     backdrop-filter: blur(10px);
+}
+
+body {
+    color: aquamarine;
 }
 
 
